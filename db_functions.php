@@ -123,6 +123,16 @@ class DB_Functions{
 		return $drinks;
 	}	
 
+
+	/*
+		Update avatar url
+		
+	*/
+	
+	public function updateAvatar($phone,$fileName) {
+		return $result = $this->conn->query("UPDATE user SET avatarUrl = '$fileName' WHERE Phone= '$phone' ");
+	}	
+
 }
 
 ?>
