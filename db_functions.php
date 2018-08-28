@@ -133,6 +133,19 @@ class DB_Functions{
 		return $result = $this->conn->query("UPDATE user SET avatarUrl = '$fileName' WHERE Phone= '$phone' ");
 	}	
 
+	/*
+		getall drink list
+	*/
+	public function getAllDrinks() {
+		$result = $this->conn->query("SELECT * FROM drink WHERE 1") or die ($this->conn->error);
+
+		$drinks = array();
+		while ($item = $result->fetch_assoc()) {
+			$drinks[] = $item;
+		}
+		return $drinks;
+	}
+
 }
 
 ?>
