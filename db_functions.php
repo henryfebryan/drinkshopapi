@@ -146,6 +146,26 @@ class DB_Functions{
 		return $drinks;
 	}
 
+
+	/*
+		Insert new order
+		return true or false
+	*/
+	public function insertNewOrder ($orderPrice, $orderComment, $orderAddress, $orderDetail, $userPhone) {
+		$stmt = $this->conn->prepare("INSERT INTO `order`(`OrderStatus`, `OrderPrice`, `OrderDetail`, `OrderComment`, `OrderAddress`, `UserPhone`) VALUES (0,?,?,?,?,?)") or die($this->conn->error);
+		$stmt->bind_param("sssss", $orderPrice, $orderDetail, $orderComment, $orderAddress,$userPhone);
+		$result = $stmt->execute();
+		$stmt->close();
+
+		if($result){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	
+
 }
 
 ?>
