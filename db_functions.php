@@ -164,8 +164,23 @@ class DB_Functions{
 		}
 	}
 
-	
+	//Seller
+	/*
+		Insert new category
+		return true or false
+	*/
+	public function insertNewCategory ($name, $imgPath) {
+		$stmt = $this->conn->prepare("INSERT INTO `menu`(`Name`, `Link`) VALUES (?,?)") or die($this->conn->error);
+		$stmt->bind_param("ss",$name,$imgPath);
+		$result = $stmt->execute();
+		$stmt->close();
 
+		if($result){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
 
 ?>
