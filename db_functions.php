@@ -181,6 +181,30 @@ class DB_Functions{
 			return false;
 		}
 	}
+
+	/*
+		update category
+		return true or false
+	*/
+	public function updateCategory ($id, $name, $imgPath) {
+		$stmt = $this->conn->prepare("UPDATE `menu` SET `Name`=?,`Link`=? WHERE `ID`=?");
+		$stmt->bind_param("sss",$name,$imgPath,$id);
+		$result = $stmt->execute();
+		return $result;
+	}
+
+	/*
+		delete category
+		return true or false
+	*/
+	public function deleteCategory ($id) {
+		$stmt = $this->conn->prepare("DELETE FROM `menu` WHERE  `ID`=? ");
+		$stmt->bind_param("s",$id);
+		$result = $stmt->execute();
+		return $result;
+	}
+
+
 }
 
 ?>
