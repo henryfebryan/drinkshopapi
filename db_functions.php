@@ -220,6 +220,30 @@ class DB_Functions{
 			return false;
 		}
 	}
+
+	/*
+		update drink
+		return true or false
+	*/
+	public function updateProduct ($id, $name, $imgPath, $price, $menuId) {
+		$stmt = $this->conn->prepare("UPDATE `drink` SET `Name`=?,`Link`=?, `Price`=?,`MenuId`=? WHERE `ID`=?");
+		$stmt->bind_param("sssss",$name,$imgPath,$price,$menuId,$id);
+		$result = $stmt->execute();
+		return $result;
+	}
+
+	/*
+		delete drink
+		return true or false
+	*/
+	public function deleteProduct ($id) {
+		$stmt = $this->conn->prepare("DELETE FROM `drink` WHERE  `ID`=? ");
+		$stmt->bind_param("s",$id);
+		$result = $stmt->execute();
+		return $result;
+	}
+
+
 }
 
 ?>
