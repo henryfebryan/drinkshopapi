@@ -204,7 +204,22 @@ class DB_Functions{
 		return $result;
 	}
 
+	/*
+		Insert new drink
+		return true or false
+	*/
+	public function insertNewDrink ($name, $imgPath, $price, $menuId) {
+		$stmt = $this->conn->prepare("INSERT INTO `drink`(`Name`, `Link`, `Price`, `MenuId`) VALUES (?,?,?,?)") or die($this->conn->error);
+		$stmt->bind_param("ssss",$name,$imgPath,$price,$menuId);
+		$result = $stmt->execute();
+		$stmt->close();
 
+		if($result){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
 
 ?>
