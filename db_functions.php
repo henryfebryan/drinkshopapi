@@ -152,7 +152,7 @@ class DB_Functions{
 		return true or false
 	*/
 	public function insertNewOrder ($orderPrice, $orderComment, $orderAddress, $orderDetail, $userPhone) {
-		$stmt = $this->conn->prepare("INSERT INTO `order`(`OrderStatus`, `OrderPrice`, `OrderDetail`, `OrderComment`, `OrderAddress`, `UserPhone`) VALUES (0,?,?,?,?,?)") or die($this->conn->error);
+		$stmt = $this->conn->prepare("INSERT INTO `order`(`OrderDate`,`OrderStatus`, `OrderPrice`, `OrderDetail`, `OrderComment`, `OrderAddress`, `UserPhone`) VALUES (NOW(),0,?,?,?,?,?)") or die($this->conn->error);
 		$stmt->bind_param("sssss", $orderPrice, $orderDetail, $orderComment, $orderAddress,$userPhone);
 		$result = $stmt->execute();
 		$stmt->close();
@@ -260,6 +260,21 @@ class DB_Functions{
 		return $orders;
 	}	
 
+	/*
+		get all order based on status
+		return order list
+	*/
+	
+	public function getOrderServerByStatus($status) {
+		$query = "SELECT * FROM `order` WHERE `OrderStatus` = '".$status. "' ";
+		$result = $this->conn->query($query) or die($this->conn->error);
+
+		$orders = array();
+		while ($order = $result->fetch_assoc()) {
+			$orders[] = $order;
+		}
+		return $orders;
+	}	
 
 }
 
