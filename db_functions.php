@@ -244,6 +244,23 @@ class DB_Functions{
 	}
 
 
+	/*
+		get all order based on userphone and status
+		return order list
+	*/
+	
+	public function getOrderByStatus($userPhone,$status) {
+		$query = "SELECT * FROM `order` WHERE `OrderStatus` = '".$status. "' AND `UserPhone` = '".$userPhone."' ";
+		$result = $this->conn->query($query) or die($this->conn->error);
+
+		$orders = array();
+		while ($order = $result->fetch_assoc()) {
+			$orders[] = $order;
+		}
+		return $orders;
+	}	
+
+
 }
 
 ?>
