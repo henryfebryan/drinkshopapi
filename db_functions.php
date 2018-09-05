@@ -297,6 +297,13 @@ class DB_Functions{
 		}
 	}
 
+	public function cancelOrder ($orderId, $userPhone) {
+		$stmt = $this->conn->prepare("UPDATE `order` SET `OrderStatus`= -1 WHERE `OrderId`=? AND `UserPhone`=? ") or die($this->conn->error);
+		$stmt->bind_param("ss",$orderId, $userPhone);
+		$result = $stmt->execute() or die($stmt->error);
+		return $result;
+	}
+
 }
 
 ?>
