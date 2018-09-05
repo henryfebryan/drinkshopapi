@@ -275,6 +275,27 @@ class DB_Functions{
 		}
 		return $orders;
 	}	
+ 	
+ 	// insert token or update
+ 	//return token object or false
+	public function insertToken($phone, $token, $isServerToken){
+		$stmt = $this->conn->prepare("INSERT INTO token(phone,token,isServerToken) VALUES (?,?,?) ON DUPLICATE KEY UPDATE token = ?, isServerToken=?") or die ($this->conn->error);
+		$stmt->bind_param("sssss", $phone, $token, $isServerToken, $token, $isServerToken);
+		$result = $stmt->execute();
+		$stmt->close();
+
+		if($result){
+			$stmt = $this->conn->prepare("SELECT * FROM token WHERE phone =?");
+			$stmt->bind_param("s", $phone);
+			$stmt->execute();
+			$user = $stmt->get_result()->fetch_assoc();
+			$stmt->close();
+			return $user;
+		}
+		else{
+			return false;
+		}
+	}
 
 }
 
