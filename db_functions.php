@@ -304,6 +304,17 @@ class DB_Functions{
 		return $result;
 	}
 
+	public function getNearbyStore($lat,$lng){
+		$query = "SELECT id,name,lat,lng, ROUND(111.045*DEGREES(ACOS(COS(RADIANS($lat))*COS(RADIANS(lat))*COS(RADIANS(lng) - RADIANS($lng))+SIN(RADIANS($lat))*SIN(RADIANS(lat)))),2) AS distance_in_km FROM store ORDER BY distance_in_km ASC";
+		$result = $this->conn->query($query) or die($this->conn->error);
+
+		$stores = array();
+		while ($store = $result->fetch_assoc()) {
+			$stores[] = $store;
+		}
+		return $stores;
+	}
+
 }
 
 ?>
